@@ -72,7 +72,12 @@ header :focus-visible{outline-color:var(--hdrink)}
 .dlg::backdrop{background:rgba(30,15,30,.65)}
 .dlgin{padding:20px 24px;max-height:86vh;overflow:auto}
 .dlg .close{float:right;margin-left:12px}
-.dash[data-step="1"] #review,.dash[data-step="1"] #studio,.dash[data-step="2"] #start,.dash[data-step="2"] #studio,.dash[data-step="3"] #start,.dash[data-step="3"] #review{display:none!important}
+.dash[data-step="about"] #start,.dash[data-step="about"] #review,.dash[data-step="about"] #studio,.dash:not([data-step="about"]) #about,.dash[data-step="1"] #review,.dash[data-step="1"] #studio,.dash[data-step="2"] #start,.dash[data-step="2"] #studio,.dash[data-step="3"] #start,.dash[data-step="3"] #review{display:none!important}
+.mode{display:flex;align-items:center;gap:6px;color:var(--hdrink);font-size:.9rem}
+.mode select{background:rgba(255,255,255,.14);color:var(--hdrink);border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:4px 8px;font:inherit}
+.mode option{color:#2a1a29;background:#fff}
+.abt{display:grid;grid-template-columns:1fr;gap:16px;margin:1em 0}
+.abt h3{margin:0 0 4px}.abt p{margin:0;color:var(--mut)}
 .steps{display:flex;gap:6px;list-style:none;margin:0;padding:0;align-items:center}
 .steps li{display:flex;align-items:center;gap:.5em;padding:4px 12px;border-radius:999px;color:var(--hdrink);opacity:.8;font-weight:600;font-size:.92rem}
 .steps li .step{margin:0}
@@ -85,7 +90,10 @@ html,body{height:100%;overflow:hidden}
 body{display:grid;grid-template-rows:auto minmax(0,1fr) auto}
 .dash{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"one";gap:14px;padding:14px 20px;min-height:0;overflow:hidden}
 .dash[data-step="3"]{grid-template-columns:330px minmax(0,1fr) minmax(260px,24%);grid-template-areas:"ct pv in"}
-#start,#review{grid-area:one;min-height:0}
+#start,#review,#about{grid-area:one;min-height:0}
+#about{display:flex;flex-direction:column;overflow:auto;padding:28px 48px}
+#about h2{font-size:clamp(1.6rem,2.6vw,2.4rem);margin:.1em 0}
+.abt{grid-template-columns:1fr 1fr;gap:24px 48px}
 #start{display:grid;grid-template-columns:1fr 1.1fr;column-gap:56px;align-content:center;padding:40px 64px}
 #start>.eyebrow,#start>h1,#start>.lead,#start>.pts{grid-column:1}
 #start>.drop{grid-column:2;grid-row:1/5;align-content:center;justify-items:center;text-align:center;padding:32px;gap:16px;min-height:min(46vh,380px)}
@@ -113,7 +121,7 @@ footer span{margin:0}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="wrap top"><a class="brand" href="#start">CanvaSkwela</a><ol class="steps" aria-label="Progress"><li aria-current="step"><span class="step">1</span><span class="lbl">Upload</span></li><li><span class="step">2</span><span class="lbl">Check</span></li><li><span class="step">3</span><span class="lbl">Style</span></li></ol><nav aria-label="Main"><a href="#start">Build a timetable</a><a href="#planned" data-dlg="planned">Planned improvements</a><a href="#privacy" data-dlg="privacy">Privacy Policy</a></nav></header>
+<header class="wrap top"><a class="brand" href="#start" data-home>CanvaSkwela</a><ol class="steps" aria-label="Progress"><li aria-current="step"><span class="step">1</span><span class="lbl">Upload</span></li><li><span class="step">2</span><span class="lbl">Check</span></li><li><span class="step">3</span><span class="lbl">Style</span></li></ol><nav aria-label="Main"><a href="#start" data-home>Build a timetable</a><a href="#about" data-about>About us</a><a href="#planned" data-dlg="planned">Planned improvements</a><a href="#privacy" data-dlg="privacy">Privacy Policy</a></nav><label class="mode">Appearance <select id="mode"><option value="auto">Auto</option><option value="light">Light</option><option value="dark">Dark</option></select></label></header>
 <main id="main" class="dash" data-step="1">
 <section id="start" class="wrap card">
 <p class="eyebrow"><span class="step">1</span>Upload</p>
@@ -161,6 +169,18 @@ footer span{margin:0}
 </div>
 </section>
 
+<section id="about" class="wrap card" aria-labelledby="abh">
+<p class="eyebrow">About us</p>
+<h2 id="abh">Schedules should be easy to read.</h2>
+<p class="lead">CanvaSkwela is a free web app that turns the class schedule PDF from the registrar into a clear, colorful weekly timetable you can keep on your phone.</p>
+<div class="abt">
+<div><h3>Why it exists</h3><p>Schedule PDFs pack subjects, days, times, and rooms into a small table. It is easy to miss a class, overlook a short break, or not notice that two classes overlap. CanvaSkwela gives you a faster, friendlier way to see the whole week at a glance.</p></div>
+<div><h3>What it does</h3><p>Upload your PDF, check the classes we found, then style your timetable and download it as an image, a PDF, a phone wallpaper, or a calendar file. It also points out free periods, long gaps, and time conflicts.</p></div>
+<div><h3>Privacy first</h3><p>Your PDF is read inside your browser. There are no accounts, and your schedule is not sent to a server run by this project. Read the full <a href="#privacy" data-dlg="privacy">Privacy Policy</a>.</p></div>
+<div><h3>Who made it</h3><p>CanvaSkwela was built by Ralf Jerby V. Paller, a Computer Engineering student at Pamantasan ng Cabuyao (University of Cabuyao), as a final project for CPP123 Emerging Technology. It was built with the help of an AI assistant (Claude); the site itself has no AI features. Questions or feedback: <a href="mailto:ralfpaller.rvp@gmail.com">ralfpaller.rvp@gmail.com</a>.</p></div>
+</div>
+<div class="row"><button class="btn" id="back3" type="button">← Back</button></div>
+</section>
 <dialog id="planned" class="dlg policy" aria-label="Planned improvements"><div class="dlgin"><button class="btn ghost sm close" type="button">Close</button>
 <h2>Planned improvements</h2>
 <p class="mut">These are not available yet.</p>
@@ -176,7 +196,7 @@ footer span{margin:0}
 <h2>Privacy Policy</h2>
 <p class="mut">Last updated October 25, 2026. CanvaSkwela is a student coursework project.</p>
 <h3>What data is collected, and why</h3>
-<p>There are no accounts, and your schedule is never sent to a server run by this project. The PDF you choose is read inside your browser, and only the class entries it finds (subject, day, time, and room) are kept; other text in the file, such as personal details, is discarded and never stored or sent. The subjects, days, times, and rooms you review or type, plus your display choices (title, theme, colors, layout), are saved in your browser’s local storage on this device. They are saved only so your timetable is still there when you come back.</p>
+<p>There are no accounts, and your schedule is never sent to a server run by this project. The PDF you choose is read inside your browser, and only the class entries it finds (subject, day, time, and room) are kept; other text in the file, such as personal details, is discarded and never stored or sent. The subjects, days, times, and rooms you review or type, plus your display choices (title, theme, colors, layout, and light or dark appearance), are saved in your browser’s local storage on this device. They are saved only so your timetable is still there when you come back.</p>
 <h3>How information is used, stored, and shared</h3>
 <ul>
 <li>Your data stays in your browser. It is not shared, sold, or used for advertising or analytics, and this app sets no cookies.</li>
@@ -191,7 +211,7 @@ footer span{margin:0}
 <p>Privacy questions: <a href="mailto:ralfpaller.rvp@gmail.com">ralfpaller.rvp@gmail.com</a></p>
 </div></dialog>
 </main>
-<footer class="wrap"><span>Student project built with AI assistance.</span><span><a href="#privacy" data-dlg="privacy">Privacy Policy</a></span><button class="link wipe" type="button">Clear saved data</button></footer>
+<footer class="wrap"><span>Student project built with AI assistance.</span><span><a href="#about" data-about>About us</a></span><span><a href="#privacy" data-dlg="privacy">Privacy Policy</a></span><button class="link wipe" type="button">Clear saved data</button></footer>
 
 <script>
 (()=>{
@@ -204,10 +224,11 @@ mint:{n:'Mint',bg:'#f1faf6',bg2:'#d6efe4',ink:'#0f3d33',grid:'#b9dccd',pal:['#2b
 sunset:{n:'Sunset',bg:'#2b1536',bg2:'#7a2e4a',ink:'#fff1e6',grid:'#69365a',pal:['#ff7b54','#ffb26b','#ffd56b','#ff6392','#c05cff','#ff9a8b','#ffcf99','#f9a1bc']},
 mono:{n:'Mono',bg:'#f4f4f5',bg2:'#e4e4e7',ink:'#18181b',grid:'#d4d4d8',pal:['#18181b','#3f3f46','#52525b','#71717a','#a1a1aa','#0f766e','#b45309','#1d4ed8']},
 accessible:{n:'Color-blind safe',bg:'#ffffff',bg2:'#eef2f7',ink:'#111827',grid:'#cbd5e1',pal:['#E69F00','#56B4E9','#009E73','#F0E442','#0072B2','#D55E00','#CC79A7','#000000']}};
-const FM={desktop:{n:'Desktop wallpaper (1920×1080)',w:1920,h:1080,top:190,ty:112},phone:{n:'Phone wallpaper (1080×2340)',w:1080,h:2340,top:700,ty:626},print:{n:'Print, landscape (1754×1240)',w:1754,h:1240,top:200,ty:120}};
+const FM={desktop:{n:'Desktop wallpaper (1920×1080)',w:1920,h:1080,top:190,ty:112},phone:{n:'Phone wallpaper (1080×2340)',w:1080,h:2340,top:190,ty:112},print:{n:'Print, landscape (1754×1240)',w:1754,h:1240,top:200,ty:120}};
 const DEF={title:'My timetable',theme:'paper',fmt:'desktop',room:true,time:true,hl:true,colors:{}},KEY='timetable-studio-v1';
 let S={...DEF,colors:{}},C=[],nid=1;
-const setStep=n=>{$('main').dataset.step=n;document.querySelectorAll('.steps li').forEach((li,i)=>i+1===n?li.setAttribute('aria-current','step'):li.removeAttribute('aria-current'));const e=document.querySelector(['#start h1','#review h2','#studio h2'][n-1]);if(e){e.setAttribute('tabindex','-1');e.focus({preventScroll:true})}window.scrollTo(0,0)};
+let prevStep=1;const AK='canvaskwela-appearance',setMode=m=>{const r=document.documentElement;if(m==='light'||m==='dark')r.dataset.theme=m;else{delete r.dataset.theme;m='auto'}$('mode').value=m};
+const setStep=n=>{prevStep=n;$('main').dataset.step=n;document.querySelectorAll('.steps li').forEach((li,i)=>i+1===n?li.setAttribute('aria-current','step'):li.removeAttribute('aria-current'));const e=document.querySelector(['#start h1','#review h2','#studio h2'][n-1]);if(e){e.setAttribute('tabindex','-1');e.focus({preventScroll:true})}window.scrollTo(0,0)};
 const p2=n=>String(n).padStart(2,'0'),hm=m=>p2(Math.floor(m/60))+':'+p2(m%60),tm=v=>{const [h,m]=v.split(':');return +h*60+ +m};
 const f12=m=>((Math.floor(m/60)%12)||12)+':'+p2(m%60),ap=m=>Math.floor(m/60)%24<12?'AM':'PM';
 const ft=m=>f12(m)+' '+ap(m),h12=m=>((Math.floor(m/60)%12)||12)+' '+ap(m);
@@ -230,15 +251,16 @@ let PAGES=[];
 function parseTable(pages){
 const out=[],seen=new Set(),cx=i=>i.x+(i.w||0)/2,srt=(a,b)=>Math.abs(a.y-b.y)>3?b.y-a.y:a.x-b.x;
 for(const it of pages){
-const codes=it.filter(i=>/^[A-Z]{2,5}\s?\d{3}[A-Z]?$/.test(i.s.trim())).sort((a,b)=>b.y-a.y);
+let codes=it.filter(i=>/^[A-Z]{2,5}\s?\d{3}[A-Z]?$/.test(i.s.trim())).sort((a,b)=>b.y-a.y);
 if(!codes.length)continue;
 const top=codes[0].y,hd=re=>it.filter(i=>i.y>top&&i.y-top<90&&re.test(i.s.trim())).sort((a,b)=>a.y-b.y)[0];
 const d=hd(/^day$/i),t=hd(/^time$/i),r=hd(/^room$/i),l=hd(/^lec\b/i),b=hd(/^lab\b/i),s=hd(/^section$/i);
 if(!d||!t||!r)continue;
+codes=codes.filter(c=>cx(c)<cx(d));if(!codes.length)continue;
 const cc=[cx(d),cx(t),cx(r),s?cx(s):cx(r)+cx(r)-cx(t)],cut=b?(cx(b)+cx(d))/2:cx(d)-(cx(t)-cx(d))/2,dr=l?l.x:cut,n=codes.length,ys=codes.map(c=>c.y);
 const gp=k=>{if(n<2)return 56;const q=Math.max(0,Math.min(k,n-2));return ys[q]-ys[q+1]};
 codes.forEach((c,k)=>{
-const up=c.y+Math.min(gp(k-1)/2,25),dn=c.y-Math.min(gp(k)/2,25),cell=[[],[],[]],desc=[];
+const up=c.y+Math.min(gp(k-1)/2,25),dn=k===n-1?c.y-18:c.y-Math.min(gp(k)/2,25),cell=[[],[],[]],desc=[];
 for(const i of it.filter(i=>i!==c&&i.y<=up&&i.y>=dn).sort(srt)){
 const x=cx(i),v=i.s.trim();
 if(x<cut){if(x<dr)desc.push(v)}
@@ -410,9 +432,14 @@ $('sort').onclick=()=>{C.sort((a,b)=>a.day-b.day||a.start-b.start);renderTable()
 $('gen').onclick=()=>{
 if(!C.some(c=>c.subject&&c.end>c.start)){say('msg2','Add at least one class with a subject and an end time later than its start time.');return}
 say('msg2','');$('studio').hidden=false;syncCtl();paint();renderColors();save();setStep(3)};
-function wipe(){try{localStorage.removeItem(KEY)}catch(e){}C=[];S={...DEF,colors:{}};syncCtl();$('review').hidden=true;$('studio').hidden=true;say('msg','Saved data cleared from this browser.');setStep(1)}
+function wipe(){try{localStorage.removeItem(KEY);localStorage.removeItem(AK)}catch(e){}setMode('auto');C=[];S={...DEF,colors:{}};syncCtl();$('review').hidden=true;$('studio').hidden=true;say('msg','Saved data cleared from this browser.');setStep(1)}
 document.querySelectorAll('.wipe').forEach(b=>b.onclick=wipe);
-$('back1').onclick=()=>setStep(1);$('back2').onclick=()=>setStep(2);
+$('back1').onclick=()=>setStep(1);$('back2').onclick=()=>setStep(2);$('back3').onclick=()=>setStep(prevStep);
+const showAbout=()=>{if($('main').dataset.step!=='about')prevStep=+$('main').dataset.step||1;$('main').dataset.step='about';document.querySelectorAll('.steps li').forEach(li=>li.removeAttribute('aria-current'));const e=document.querySelector('#about h2');e.setAttribute('tabindex','-1');e.focus({preventScroll:true});window.scrollTo(0,0)};
+document.querySelectorAll('[data-about]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showAbout()}));
+document.querySelectorAll('[data-home]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();if($('main').dataset.step==='about')setStep(prevStep)}));
+{let m='auto';try{m=localStorage.getItem(AK)||'auto'}catch(e){}setMode(m)}
+$('mode').onchange=e=>{setMode(e.target.value);try{e.target.value==='auto'?localStorage.removeItem(AK):localStorage.setItem(AK,e.target.value)}catch(_){}};
 const dOpen=d=>{if(d&&d.showModal&&!d.open)d.showModal()};
 document.querySelectorAll('[data-dlg]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();dOpen($(a.dataset.dlg))}));
 document.querySelectorAll('dialog').forEach(d=>{d.addEventListener('click',e=>{if(e.target===d)d.close()});const b=d.querySelector('.close');if(b)b.onclick=()=>d.close()});
