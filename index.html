@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CanvaSkwela</title>
+<style>
+:root{color-scheme:light;--bg:#eef2f7;--card:#fff;--ink:#14202e;--mut:#52606f;--line:#d3dbe5;--acc:#0b6e82;--on:#fff;--warn:#b3261e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f151d;--card:#17202b;--ink:#e8eef5;--mut:#9fb0c2;--line:#2b3948;--acc:#4cc3d9;--on:#06222a;--warn:#ff8a80}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f151d;--card:#17202b;--ink:#e8eef5;--mut:#9fb0c2;--line:#2b3948;--acc:#4cc3d9;--on:#06222a;--warn:#ff8a80}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Avenir Next","Segoe UI",system-ui,sans-serif}
+a{color:var(--acc)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 18px}
+.top{display:flex;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px;gap:12px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.15rem;text-decoration:none;color:var(--ink);letter-spacing:-.01em}
+nav a{margin-left:18px;font-weight:600}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--card);padding:8px;z-index:9}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+h1{font-size:clamp(2rem,5.5vw,3.6rem);line-height:1.04;letter-spacing:-.03em;margin:.5em 0 .3em;max-width:16ch}
+h2{font-size:1.55rem;letter-spacing:-.01em;margin:0 0 .3em}
+h3{margin:1.3em 0 .3em;font-size:1.05rem}
+.lead{font-size:1.15rem;max-width:60ch;color:var(--mut);margin:0 0 1.4em}
+.mut{color:var(--mut)}
+section{padding-top:36px;padding-bottom:12px}
+section+section{border-top:1px solid var(--line);margin-top:28px}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:26px;display:grid;gap:14px;background:var(--card)}
+.drop.over{border-color:var(--acc)}
+.drop p{margin:0}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.drop .row{margin:0}
+.btn{font:inherit;font-weight:700;padding:.62em 1.1em;border-radius:10px;border:1.5px solid var(--acc);background:var(--acc);color:var(--on);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--acc)}.btn.sm{padding:.3em .7em;font-size:.9rem}
+.btn:hover{filter:brightness(1.1)}
+.link{font:inherit;background:none;border:0;color:var(--acc);text-decoration:underline;cursor:pointer;padding:0}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+input,select{font:inherit;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:.45em .6em;width:100%}
+input[type=color],input[type=checkbox]{width:auto;padding:0}
+input[type=color]{width:36px;height:28px;border-radius:6px;background:none}
+#msg,#msg2,#msg3{min-height:1.5em;margin:.8em 0 0;font-weight:600}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:680px}
+th{text-align:left;font-weight:600;padding:8px;color:var(--mut);font-size:.9rem}
+td{padding:4px 6px}td:first-child{min-width:210px}td input,td select{min-width:96px}
+.studio{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start;margin-top:14px}
+@media(max-width:860px){.studio{grid-template-columns:1fr}}
+.ctl{display:grid;gap:14px}
+label{display:grid;gap:4px;font-weight:600}
+label.ck,label.sw{display:flex;align-items:center;gap:8px;font-weight:500;margin-bottom:6px}
+fieldset{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px}legend{font-weight:700;padding:0 6px}
+#cv{display:block;max-width:100%;max-height:82vh;margin:0 auto;border:1px solid var(--line);border-radius:10px}
+.ins{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.ins li{padding:8px 12px;border-left:5px solid var(--line);background:var(--card);border-radius:0 8px 8px 0}
+.ins .bad{border-left-color:var(--warn)}.ins .long{border-left-color:var(--acc)}
+.policy{max-width:70ch}.policy ul{padding-left:1.2em}
+footer{padding-top:30px;padding-bottom:40px;color:var(--mut)}footer span{margin-right:18px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="wrap top"><a class="brand" href="#start">CanvaSkwela</a><nav aria-label="Main"><a href="#start">Build a timetable</a><a href="#privacy">Privacy Policy</a></nav></header>
+<main id="main">
+<section id="start" class="wrap">
+<h1>Turn your schedule PDF into a timetable worth keeping</h1>
+<p class="lead">Upload your class schedule, fix anything we misread, then pick colors and a theme. Download the result as an image, a PDF, or a wallpaper for your phone.</p>
+<div class="drop" id="drop">
+<p><strong>Drop your schedule PDF here</strong><br><span class="mut">It’s read inside your browser and never uploaded.</span></p>
+<div class="row"><button class="btn" id="pick" type="button">Choose a PDF</button><button class="btn ghost" id="sample" type="button">Try a sample schedule</button><button class="btn ghost" id="blank" type="button">Enter classes by hand</button></div>
+<input id="file" type="file" accept="application/pdf,.pdf" hidden>
+</div>
+<p id="msg" role="status" aria-live="polite"></p>
+</section>
+
+<section id="review" class="wrap" hidden>
+<h2>Check what we found</h2>
+<p class="mut">PDF text isn’t always read perfectly. Fix any subject, day, time, or room before you generate.</p>
+<div class="scroll"><table><thead><tr><th>Subject</th><th>Day</th><th>Start</th><th>End</th><th>Room</th><th><span class="sr">Remove</span></th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="row"><button class="btn ghost" id="add" type="button">Add a class</button><button class="btn ghost" id="sort" type="button">Sort by day and time</button><button class="btn" id="gen" type="button">Generate timetable</button></div>
+<p id="msg2" role="status" aria-live="polite"></p>
+</section>
+
+<section id="studio" class="wrap" hidden>
+<h2>Style your timetable</h2>
+<div class="studio">
+<div class="ctl">
+<label>Title<input id="title" type="text" maxlength="40"></label>
+<label>Theme<select id="theme"></select></label>
+<label>Layout<select id="fmt"></select></label>
+<fieldset><legend>Show on timetable</legend>
+<label class="ck"><input type="checkbox" id="o_time"> Times</label>
+<label class="ck"><input type="checkbox" id="o_room"> Rooms</label>
+<label class="ck"><input type="checkbox" id="o_hl"> Outline conflicts</label></fieldset>
+<fieldset><legend>Subject colors</legend><div id="colors"></div><button class="btn ghost sm" id="reset" type="button">Reset colors</button></fieldset>
+<div class="row" style="margin:0"><button class="btn" id="png" type="button">Download image</button><button class="btn" id="pdf" type="button">Download PDF</button><button class="btn ghost" id="ics" type="button">Add to calendar (.ics)</button></div>
+<label class="ck"><input type="checkbox" id="o_rem"> Add a 10-minute reminder to calendar events</label>
+<p id="msg3" role="status" aria-live="polite"></p>
+</div>
+<div>
+<canvas id="cv" role="img" aria-label="Preview of your generated timetable. The same information is in the table above and the insights list below."></canvas>
+<h3>Schedule insights</h3>
+<ul id="ins" class="ins"></ul>
+</div>
+</div>
+</section>
+
+<section id="planned" class="wrap policy">
+<h2>Planned improvements</h2>
+<p class="mut">These are not available yet.</p>
+<ul>
+<li>Reading scanned PDFs and screenshots with text recognition (OCR), with editable results.</li>
+<li>Reading grid-style timetable PDFs and more schedule layouts.</li>
+<li>More themes and color palettes.</li>
+<li>Bundling the PDF reader with the site so no outside request is needed.</li>
+</ul>
+</section>
+
+<section id="privacy" class="wrap policy">
+<h2>Privacy Policy</h2>
+<p class="mut">Last updated October 25, 2026. CanvaSkwela is a student coursework project.</p>
+<h3>What data is collected, and why</h3>
+<p>There are no accounts, and your schedule is never sent to a server run by this project. The PDF you choose is read inside your browser, and only the class entries it finds (subject, day, time, and room) are kept; other text in the file, such as personal details, is discarded and never stored or sent. The subjects, days, times, and rooms you review or type, plus your display choices (title, theme, colors, layout), are saved in your browser’s local storage on this device. They are saved only so your timetable is still there when you come back.</p>
+<h3>How information is used, stored, and shared</h3>
+<ul>
+<li>Your data stays in your browser. It is not shared, sold, or used for advertising or analytics, and this app sets no cookies.</li>
+<li>The first time you choose a PDF, your browser downloads the open-source PDF.js reader from the cdnjs content delivery network (operated by Cloudflare). That request can reveal your IP address and browser details to cdnjs, as any file request does. Your PDF is not sent there.</li>
+<li>The website host may keep standard server logs (such as IP address and browser type) when delivering pages. This app can’t see those logs.</li>
+</ul>
+<h3>Deleting your information</h3>
+<p>Select <button class="link wipe" type="button">Clear saved data</button> to erase everything this app stored in your browser. You can also clear this site’s data in your browser settings. Because no copy exists anywhere else, there is nothing more to delete.</p>
+<h3>Safeguards and limits</h3>
+<p>Files are processed on your device, and saved data is only as private as your device and browser profile: anyone using the same profile can see it. Images, PDFs, and calendar files you download are saved wherever you choose. No system is perfectly secure, so please use test or non-sensitive schedules and avoid PDFs containing IDs, grades, or other personal records.</p>
+<h3>Contact</h3>
+<p>Privacy questions: <a href="mailto:ralfpaller.rvp@gmail.com">ralfpaller.rvp@gmail.com</a></p>
+</section>
+</main>
+<footer class="wrap"><span>Student project built with AI assistance.</span><span><a href="#privacy">Privacy Policy</a></span><button class="link wipe" type="button">Clear saved data</button></footer>
+
+<script>
+(()=>{
+const $=id=>document.getElementById(id),say=(id,t)=>{$(id).textContent=t};
+const DN=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],FONT='"Avenir Next","Segoe UI",system-ui,sans-serif';
+const TH={
+paper:{n:'Paper',bg:'#ffffff',bg2:'#eaf0f8',ink:'#1c2333',grid:'#d5dde9',pal:['#ffadad','#ffd6a5','#fdffb6','#caffbf','#9bf6ff','#a0c4ff','#bdb2ff','#ffc6ff']},
+midnight:{n:'Midnight',bg:'#0e1330',bg2:'#241552',ink:'#e9ecff',grid:'#2f3a70',pal:['#ff6b9a','#ffa94d','#ffe066','#69db7c','#38d9a9','#4dabf7','#9775fa','#f783ac']},
+mint:{n:'Mint',bg:'#f1faf6',bg2:'#d6efe4',ink:'#0f3d33',grid:'#b9dccd',pal:['#2b9348','#2a9d8f','#0096c7','#52b69a','#55a630','#3a86a8','#76c893','#99d98c']},
+sunset:{n:'Sunset',bg:'#2b1536',bg2:'#7a2e4a',ink:'#fff1e6',grid:'#69365a',pal:['#ff7b54','#ffb26b','#ffd56b','#ff6392','#c05cff','#ff9a8b','#ffcf99','#f9a1bc']},
+mono:{n:'Mono',bg:'#f4f4f5',bg2:'#e4e4e7',ink:'#18181b',grid:'#d4d4d8',pal:['#18181b','#3f3f46','#52525b','#71717a','#a1a1aa','#0f766e','#b45309','#1d4ed8']},
+accessible:{n:'Color-blind safe',bg:'#ffffff',bg2:'#eef2f7',ink:'#111827',grid:'#cbd5e1',pal:['#E69F00','#56B4E9','#009E73','#F0E442','#0072B2','#D55E00','#CC79A7','#000000']}};
+const FM={desktop:{n:'Desktop wallpaper (1920×1080)',w:1920,h:1080,top:190,ty:112},phone:{n:'Phone wallpaper (1080×2340)',w:1080,h:2340,top:700,ty:626},print:{n:'Print, landscape (1754×1240)',w:1754,h:1240,top:200,ty:120}};
+const DEF={title:'My timetable',theme:'paper',fmt:'desktop',room:true,time:true,hl:true,colors:{}},KEY='timetable-studio-v1';
+let S={...DEF,colors:{}},C=[],nid=1;
+const p2=n=>String(n).padStart(2,'0'),hm=m=>p2(Math.floor(m/60))+':'+p2(m%60),tm=v=>{const [h,m]=v.split(':');return +h*60+ +m};
+const f12=m=>((Math.floor(m/60)%12)||12)+':'+p2(m%60),ap=m=>Math.floor(m/60)%24<12?'AM':'PM';
+const ft=m=>f12(m)+' '+ap(m),h12=m=>((Math.floor(m/60)%12)||12)+' '+ap(m);
+const rng=(a,b)=>ap(a)===ap(b)?f12(a)+'–'+f12(b)+' '+ap(b):ft(a)+'–'+ft(b);
+const dur=m=>m<60?m+' min':Math.floor(m/60)+' h'+(m%60?' '+m%60+' min':'');
+const mk=(subject,day,start,end,room='')=>({id:nid++,subject,day,start,end,room}),sn=c=>c.subject||'Untitled';
+const subs=()=>[...new Set(C.map(sn))],colorOf=s=>S.colors[s]||TH[S.theme].pal[subs().indexOf(s)%8];
+
+/* ---------- PDF reading and parsing ---------- */
+const js=u=>new Promise((ok,no)=>{const s=document.createElement('script');s.src=u;s.onload=ok;s.onerror=()=>no(new Error('The PDF reader couldn’t be loaded. Check your connection and try again.'));document.head.append(s)});
+async function pdfLines(f){
+const b='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+if(!window.pdfjsLib){await js(b+'pdf.min.js');await js(b+'pdf.worker.min.js');pdfjsLib.GlobalWorkerOptions.workerSrc=b+'pdf.worker.min.js'}
+const pdf=await pdfjsLib.getDocument({data:new Uint8Array(await f.arrayBuffer())}).promise,rows=[];PAGES=[];
+for(let p=1;p<=pdf.numPages;p++){
+const tc=await(await pdf.getPage(p)).getTextContent(),it=tc.items.filter(i=>i.str.trim()).map(i=>({x:i.transform[4],y:i.transform[5],w:i.width,s:i.str})).sort((a,b)=>b.y-a.y||a.x-b.x);PAGES.push(it);
+let row=null;for(const i of it){if(row&&Math.abs(row.y-i.y)<=3)row.r.push(i);else{row={y:i.y,r:[i]};rows.push(row)}}}
+return rows.map(r=>r.r.sort((a,b)=>a.x-b.x).map(i=>i.s).join(' ').replace(/\s+/g,' ').trim());}
+let PAGES=[];
+function parseTable(pages){
+const out=[],seen=new Set(),cx=i=>i.x+(i.w||0)/2,srt=(a,b)=>Math.abs(a.y-b.y)>3?b.y-a.y:a.x-b.x;
+for(const it of pages){
+const codes=it.filter(i=>/^[A-Z]{2,5}\s?\d{3}[A-Z]?$/.test(i.s.trim())).sort((a,b)=>b.y-a.y);
+if(!codes.length)continue;
+const top=codes[0].y,hd=re=>it.filter(i=>i.y>top&&i.y-top<90&&re.test(i.s.trim())).sort((a,b)=>a.y-b.y)[0];
+const d=hd(/^day$/i),t=hd(/^time$/i),r=hd(/^room$/i),l=hd(/^lec\b/i),b=hd(/^lab\b/i),s=hd(/^section$/i);
+if(!d||!t||!r)continue;
+const cc=[cx(d),cx(t),cx(r),s?cx(s):cx(r)+cx(r)-cx(t)],cut=b?(cx(b)+cx(d))/2:cx(d)-(cx(t)-cx(d))/2,dr=l?l.x:cut,n=codes.length,ys=codes.map(c=>c.y);
+const gp=k=>{if(n<2)return 56;const q=Math.max(0,Math.min(k,n-2));return ys[q]-ys[q+1]};
+codes.forEach((c,k)=>{
+const up=c.y+Math.min(gp(k-1)/2,25),dn=c.y-Math.min(gp(k)/2,25),cell=[[],[],[]],desc=[];
+for(const i of it.filter(i=>i!==c&&i.y<=up&&i.y>=dn).sort(srt)){
+const x=cx(i),v=i.s.trim();
+if(x<cut){if(x<dr)desc.push(v)}
+else{let j=0;cc.forEach((m,q)=>{if(Math.abs(x-m)<Math.abs(x-cc[j]))j=q});if(j<3)cell[j].push(v)}}
+const sp=a=>a.join(' ').split('/').map(v=>v.trim()).filter(Boolean),D=sp(cell[0]),T=sp(cell[1]),R=sp(cell[2]);
+const subj=(c.s.trim()+' '+desc.join(' ')).replace(/\s+/g,' ').trim();
+for(let q=0;q<Math.max(D.length,T.length);q++){
+const m=TRE.exec((T[Math.min(q,T.length-1)]||'').replace(/\b([ap])\.m\b\.?/gi,'$1m'));if(!m)continue;
+const [s0,e0]=prange(m),room=R[Math.min(q,R.length-1)]||'';
+for(const day of pdays(D[Math.min(q,D.length-1)]||'').days){const key=[subj,day,s0,e0].join('|');if(e0>s0&&!seen.has(key)){seen.add(key);out.push(mk(subj,day,s0,e0,room))}}}})}
+return out}
+const DMAP={mon:0,tue:1,wed:2,thu:3,fri:4,sat:5,sun:6},CMAP={M:0,T:1,W:2,Th:3,F:4,Sa:5,S:5,Su:6};
+const DAYRE=/\b(mon(?:day)?|tues?(?:day)?|wed(?:nesday)?|thu(?:rs?(?:day)?)?|fri(?:day)?|sat(?:urday)?|sun(?:day)?)\b/gi;
+const TRE=/\b(\d{1,2})(?::(\d{2}))?\s*([ap]m)?\s*(?:-|–|—|to)\s*(\d{1,2})(?::(\d{2}))?\s*([ap]m)?(?!\d)/i;
+function pdays(t){
+const ds=[];let r=t.replace(DAYRE,m=>{ds.push(DMAP[m.slice(0,3).toLowerCase()]);return ' '});
+if(!ds.length)r=r.split(/(\s+)/).map(w=>{if(/^(?:Th|Su|Sa|M|T|W|F|S)+$/.test(w)){w.match(/Th|Su|Sa|M|T|W|F|S/g).forEach(k=>ds.push(CMAP[k]));return ' '}return w}).join('');
+return{days:[...new Set(ds)].sort(),r}}
+function prange(m){
+let a1=m[3]&&m[3].toLowerCase(),a2=m[6]&&m[6].toLowerCase(),s,e;if(!a1)a1=a2;
+const c=(h,mi,a)=>{h=+h;if(a==='pm'&&h<12)h+=12;if(a==='am'&&h===12)h=0;return h*60+(+mi||0)};
+if(a1||a2){s=c(m[1],m[2],a1);e=c(m[4],m[5],a2)}
+else{const g=h=>+h>=1&&+h<=6?+h+12:+h;s=g(m[1])*60+(+m[2]||0);e=g(m[4])*60+(+m[5]||0)}
+if(s>=e&&s>=720)s-=720;return[s,e]}
+function parse(lines){
+const out=[],seen=new Set();let cur=[],prev='';
+for(const raw of lines){
+const t=raw.replace(/\b([ap])\.m\b\.?/gi,'$1m'),m=TRE.exec(t);
+if(!m||!/:|[ap]m/i.test(m[0])){const d=pdays(t);if(d.days.length&&!/[a-z]{3,}/i.test(d.r))cur=d.days;else if(t.trim())prev=t.trim();continue}
+const [s,e]=prange(m),d=pdays(t.slice(0,m.index)+' '+t.slice(m.index+m[0].length));let room='';
+const r=d.r.replace(/\b(?:rm|room)\.?\s*[\w-]+|\blab\.?\s*[\w-]*\d[\w-]*/i,x=>{room=x.trim();return ' '});
+const subj=r.replace(/[|;,]+/g,' ').replace(/\s+/g,' ').trim()||prev;
+for(const day of d.days.length?d.days:cur.length?cur:[0]){const k=[subj,day,s,e].join('|');if(!seen.has(k)&&e>s){seen.add(k);out.push(mk(subj,day,s,e,room))}}}
+return out}
+
+/* ---------- insights ---------- */
+function ins(){
+const conf=new Set(),conflicts=[],gaps=[],mins=Array(7).fill(0);
+for(let d=0;d<7;d++){
+const L=C.filter(c=>c.day===d&&c.end>c.start).sort((a,b)=>a.start-b.start);let last=null;
+for(const c of L){mins[d]+=c.end-c.start;
+if(last){if(c.start<last.end){conf.add(c.id);conf.add(last.id);conflicts.push(DN[d]+': '+sn(last)+' ('+rng(last.start,last.end)+') overlaps '+sn(c)+' ('+rng(c.start,c.end)+')')}
+else if(c.start-last.end>=30)gaps.push({d,from:last.end,to:c.start})}
+if(!last||c.end>last.end)last=c}}
+return{conf,conflicts,gaps,mins}}
+function showIns(){
+const I=ins(),ul=$('ins'),tot=I.mins.reduce((a,b)=>a+b,0),add=(t,k)=>{const li=document.createElement('li');if(k)li.className=k;li.textContent=t;ul.append(li)};
+ul.textContent='';
+if(!tot){add('Add a class with a valid start and end time to see insights.');return}
+const bd=I.mins.indexOf(Math.max(...I.mins)),free=DN.slice(0,5).filter((d,i)=>!I.mins[i]);
+add('Class time per week: '+dur(tot)+'. Busiest day: '+DN[bd]+' ('+dur(I.mins[bd])+').');
+if(free.length)add('Free days: '+free.join(', ')+'.');
+I.conflicts.forEach(t=>add('Conflict: '+t,'bad'));
+if(!I.conflicts.length)add('No time conflicts found.');
+I.gaps.forEach(g=>{const n=g.to-g.from;add((n>=120?'Long gap: ':'Free period: ')+DN[g.d]+', '+dur(n)+' between '+ft(g.from)+' and '+ft(g.to)+'.',n>=120?'long':'')})}
+
+/* ---------- drawing ---------- */
+const lum=h=>{const n=parseInt(h.slice(1),16);return(.299*(n>>16)+.587*(n>>8&255)+.114*(n&255))/255};
+function rr(x,a,b,w,h,r){r=Math.min(r,w/2,h/2);x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath()}
+function put(x,t,font,px,py,mw,maxY,lh){x.font=font;let line='',y=py;
+for(const w of t.split(' ')){const u=line?line+' '+w:w;if(line&&x.measureText(u).width>mw){if(y+lh>maxY)return y;x.fillText(line,px,y);y+=lh;line=w}else line=u}
+if(line&&y+lh<=maxY){x.fillText(line,px,y);y+=lh}return y}
+function draw(cv){
+const F=FM[S.fmt],th=TH[S.theme],W=F.w,H=F.h,x=cv.getContext('2d');cv.width=W;cv.height=H;
+const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,th.bg);g.addColorStop(1,th.bg2);x.fillStyle=g;x.fillRect(0,0,W,H);
+const L=C.filter(c=>c.end>c.start),nd=Math.max(5,...L.map(c=>c.day+1));
+let t0=480,t1=1020;if(L.length){t0=Math.floor(Math.min(...L.map(c=>c.start))/60)*60;t1=Math.ceil(Math.max(...L.map(c=>c.end))/60)*60}
+if(t1-t0<360)t1=t0+360;
+const pad=W*.045,gx=pad+W*.07,cw=(W-pad-gx)/nd,hh=Math.min(cw*.28,70),gy=F.top+hh,hr=(H-pad-gy)/((t1-t0)/60);
+x.fillStyle=th.ink;x.textBaseline='alphabetic';x.textAlign='left';x.font='700 '+Math.round(W*.034)+'px '+FONT;x.fillText(S.title||'My timetable',pad,F.ty);
+x.strokeStyle=th.grid;x.lineWidth=2;x.textBaseline='middle';x.textAlign='center';x.font='600 '+Math.round(Math.min(hh*.42,30))+'px '+FONT;
+for(let d=0;d<nd;d++)x.fillText(DN[d],gx+cw*(d+.5),gy-hh/2);
+x.textAlign='right';x.font='500 '+Math.round(Math.min(hr*.3,26))+'px '+FONT;
+for(let t=t0;t<=t1;t+=60){const y=gy+(t-t0)/60*hr;x.globalAlpha=.75;x.fillText(h12(t),gx-14,y);x.globalAlpha=1;x.beginPath();x.moveTo(gx,y);x.lineTo(W-pad,y);x.stroke()}
+for(let d=0;d<=nd;d++){x.beginPath();x.moveTo(gx+cw*d,gy);x.lineTo(gx+cw*d,H-pad);x.stroke()}
+const cf=ins().conf,fs=Math.max(13,Math.min(cw*.15,hr*.3,40)),q=fs*.45;
+for(const c of L){
+const bx=gx+c.day*cw+4,bw=cw-8,by=gy+(c.start-t0)/60*hr+2,bh=(c.end-c.start)/60*hr-4,col=colorOf(sn(c)),rad=Math.min(18,fs);
+x.fillStyle=col;rr(x,bx,by,bw,bh,rad);x.fill();x.save();x.clip();
+x.fillStyle=lum(col)>.6?'#161a26':'#ffffff';x.textAlign='left';x.textBaseline='top';
+const mw=bw-2*q,mb=by+bh-q;let y=put(x,sn(c),'700 '+fs+'px '+FONT,bx+q,by+q,mw,mb,fs*1.22);
+if(S.time)y=put(x,rng(c.start,c.end),'500 '+fs*.82+'px '+FONT,bx+q,y,mw,mb,fs);
+if(S.room&&c.room)put(x,c.room,'500 '+fs*.82+'px '+FONT,bx+q,y,mw,mb,fs);
+x.restore();
+if(S.hl&&cf.has(c.id)){rr(x,bx,by,bw,bh,rad);x.strokeStyle='#ff2d55';x.lineWidth=5;x.setLineDash([14,8]);x.stroke();x.setLineDash([])}}}
+
+/* ---------- state, table, colors ---------- */
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({C,S}))}catch(e){}};
+function paint(){draw($('cv'));showIns()}
+function refresh(rc=true){save();if($('studio').hidden)return;paint();if(rc)renderColors()}
+function field(type,val,label,fn){const e=document.createElement('input');e.type=type;e.value=val;e.setAttribute('aria-label',label);e.oninput=()=>{fn(e.value);refresh()};return e}
+function renderTable(){
+const tb=$('rows');tb.textContent='';
+C.forEach((c,i)=>{const tr=tb.insertRow(),n=i+1,cell=el=>tr.insertCell().append(el);
+cell(field('text',c.subject,'Subject, row '+n,v=>c.subject=v.trim()));
+const s=document.createElement('select');s.setAttribute('aria-label','Day, row '+n);DN.forEach((d,k)=>s.add(new Option(d,k)));s.value=c.day;s.onchange=()=>{c.day=+s.value;refresh()};cell(s);
+cell(field('time',hm(c.start),'Start time, row '+n,v=>{if(v)c.start=tm(v)}));
+cell(field('time',hm(c.end),'End time, row '+n,v=>{if(v)c.end=tm(v)}));
+cell(field('text',c.room,'Room, row '+n,v=>c.room=v.trim()));
+const b=document.createElement('button');b.type='button';b.className='btn ghost sm';b.textContent='Remove';b.setAttribute('aria-label','Remove row '+n);b.onclick=()=>{C.splice(i,1);renderTable();refresh()};cell(b)})}
+function renderColors(){
+const box=$('colors');box.textContent='';
+subs().forEach(s=>{const l=document.createElement('label'),i=document.createElement('input');l.className='sw';i.type='color';i.value=colorOf(s);i.oninput=()=>{S.colors[s]=i.value;save();paint()};l.append(i,s);box.append(l)})}
+function syncCtl(){$('theme').value=S.theme;$('fmt').value=S.fmt;$('title').value=S.title;['room','time','hl'].forEach(k=>$('o_'+k).checked=S[k])}
+function go(list,note){C=list;renderTable();$('review').hidden=false;$('studio').hidden=true;say('msg',note);say('msg2','');save();$('review').scrollIntoView()}
+async function readPdf(f){
+if(!/pdf$/i.test(f.type)&&!/\.pdf$/i.test(f.name)){say('msg','Please choose a PDF file.');return}
+say('msg','Reading '+f.name+'…');
+try{const lines=await pdfLines(f),tl=parseTable(PAGES),list=tl.length?tl:parse(lines);PAGES=[];
+go(list.length?list:[mk('',0,540,630,'')],list.length?'Found '+list.length+' class slot'+(list.length>1?'s':'')+'. Check each row below, fix anything we misread, then generate your timetable.':'We couldn’t find class times in this PDF. Scanned or image-only PDFs can’t be read, and grid-style tables may need manual entry. Add your classes below or try the sample.')}
+catch(e){say('msg',e.message||'That PDF couldn’t be read.')}}
+
+/* ---------- export ---------- */
+function mkPdf(jpg,w,h,pw,ph){
+const te=new TextEncoder(),parts=[],off=[];let n=0;
+const add=d=>{const b=typeof d==='string'?te.encode(d):d;parts.push(b);n+=b.length},obj=(i,body)=>{off[i]=n;add(i+' 0 obj\n'+body+'\nendobj\n')};
+add('%PDF-1.4\n');obj(1,'<</Type/Catalog/Pages 2 0 R>>');obj(2,'<</Type/Pages/Kids[3 0 R]/Count 1>>');
+obj(3,'<</Type/Page/Parent 2 0 R/MediaBox[0 0 '+pw+' '+ph+']/Resources<</XObject<</I 4 0 R>>>>/Contents 5 0 R>>');
+off[4]=n;add('4 0 obj\n<</Type/XObject/Subtype/Image/Width '+w+'/Height '+h+'/ColorSpace/DeviceRGB/BitsPerComponent 8/Filter/DCTDecode/Length '+jpg.length+'>>\nstream\n');add(jpg);add('\nendstream\nendobj\n');
+const cs='q '+pw+' 0 0 '+ph+' 0 0 cm /I Do Q';obj(5,'<</Length '+cs.length+'>>\nstream\n'+cs+'\nendstream');
+const xr=n;let t='xref\n0 6\n0000000000 65535 f \n';for(let i=1;i<6;i++)t+=String(off[i]).padStart(10,'0')+' 00000 n \n';
+add(t+'trailer\n<</Size 6/Root 1 0 R>>\nstartxref\n'+xr+'\n%%EOF');return new Blob(parts,{type:'application/pdf'})}
+async function out(blob,name){
+let dl=null;try{dl=window.claude&&claude.use?await claude.use('downloads'):null}catch(e){}
+if(dl){try{await dl.save({filename:name,data:blob})}catch(e){if(!e||e.code!=='declined')say('msg3','The download couldn’t start: '+((e&&e.message)||'unknown error'))}return}
+const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)}
+const fname=()=>(S.title||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'timetable';
+
+/* ---------- wiring ---------- */
+const fill=(id,o)=>{const e=$(id);for(const k in o)e.add(new Option(o[k].n,k));return e};
+fill('theme',TH).onchange=e=>{S.theme=e.target.value;refresh()};
+fill('fmt',FM).onchange=e=>{S.fmt=e.target.value;refresh()};
+$('title').oninput=e=>{S.title=e.target.value;refresh(false)};
+['room','time','hl'].forEach(k=>$('o_'+k).onchange=e=>{S[k]=e.target.checked;refresh(false)});
+$('reset').onclick=()=>{S.colors={};refresh()};
+$('png').onclick=()=>$('cv').toBlob(b=>out(b,fname()+'.png'),'image/png');
+$('pdf').onclick=()=>{const cv=$('cv'),u=atob(cv.toDataURL('image/jpeg',.95).split(',')[1]),a=new Uint8Array(u.length);for(let i=0;i<u.length;i++)a[i]=u.charCodeAt(i);out(mkPdf(a,cv.width,cv.height,Math.round(cv.width*.48),Math.round(cv.height*.48)),fname()+'.pdf')};
+function mkIcs(rem){
+const esc=s=>String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');
+const now=new Date(),mon=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
+const BD=['MO','TU','WE','TH','FR','SA','SU'],ds=d=>d.getFullYear()+p2(d.getMonth()+1)+p2(d.getDate()),tt=m=>p2(Math.floor(m/60))+p2(m%60)+'00';
+const st=now.getUTCFullYear()+p2(now.getUTCMonth()+1)+p2(now.getUTCDate())+'T'+p2(now.getUTCHours())+p2(now.getUTCMinutes())+p2(now.getUTCSeconds())+'Z';
+const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//CanvaSkwela//Timetable//EN','CALSCALE:GREGORIAN'];
+C.filter(c=>c.end>c.start&&c.subject).forEach(c=>{
+const d=new Date(mon);d.setDate(mon.getDate()+c.day);
+L.push('BEGIN:VEVENT','UID:canvaskwela-'+c.id+'-'+st+'@canvaskwela','DTSTAMP:'+st,'DTSTART:'+ds(d)+'T'+tt(c.start),'DTEND:'+ds(d)+'T'+tt(c.end),'RRULE:FREQ=WEEKLY;COUNT=18;BYDAY='+BD[c.day],'SUMMARY:'+esc(sn(c)));
+if(c.room)L.push('LOCATION:'+esc(c.room));
+if(rem)L.push('BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+esc(sn(c)),'TRIGGER:-PT10M','END:VALARM');
+L.push('END:VEVENT')});
+L.push('END:VCALENDAR');
+return new Blob([L.join('\r\n')+'\r\n'],{type:'text/calendar'})}
+$('ics').onclick=async()=>{
+if(!C.some(c=>c.subject&&c.end>c.start)){say('msg3','Add at least one class with a subject and a valid end time first.');return}
+let dl=null;try{dl=window.claude&&claude.use?await claude.use('downloads'):null}catch(e){}
+if(dl){say('msg3','Calendar (.ics) files can be saved from the deployed site, but not from this preview.');return}
+say('msg3','Calendar file created. Open it to add your weekly classes (they repeat for 18 weeks, starting this week).');out(mkIcs($('o_rem').checked),fname()+'.ics')};
+$('pick').onclick=()=>$('file').click();
+$('file').onchange=e=>{const f=e.target.files[0];if(f)readPdf(f);e.target.value=''};
+const dz=$('drop');
+['dragenter','dragover'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.add('over')}));
+['dragleave','drop'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.remove('over')}));
+dz.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f)readPdf(f)});
+const SAMPLE=[['Calculus 1',[0,2],540,630,'Room 201'],['Intro to Programming',[0,2],645,735,'Lab 3'],['Digital Logic Design',[0],900,1020,'Lab 1'],['Physics 1',[1,3],480,570,'Room 105'],['Technical Writing',[1,3],600,690,'Room 210'],['Engineering Drawing',[1],630,720,'Room 12'],['Physical Education',[4],840,960,'Gym']];
+$('sample').onclick=()=>go(SAMPLE.flatMap(([s,ds,a,b,r])=>ds.map(d=>mk(s,d,a,b,r))),'Sample schedule loaded (fictional data). Check the rows, then generate.');
+$('blank').onclick=()=>go([mk('New subject',0,540,630,'')],'Edit the first row, then add the rest of your classes.');
+$('add').onclick=()=>{C.push(mk('New subject',0,540,630,''));renderTable();refresh();const r=$('rows').lastElementChild;if(r)r.querySelector('input').focus()};
+$('sort').onclick=()=>{C.sort((a,b)=>a.day-b.day||a.start-b.start);renderTable();refresh()};
+$('gen').onclick=()=>{
+if(!C.some(c=>c.subject&&c.end>c.start)){say('msg2','Add at least one class with a subject and an end time later than its start time.');return}
+say('msg2','');$('studio').hidden=false;syncCtl();paint();renderColors();save();$('studio').scrollIntoView()};
+function wipe(){try{localStorage.removeItem(KEY)}catch(e){}C=[];S={...DEF,colors:{}};syncCtl();$('review').hidden=true;$('studio').hidden=true;say('msg','Saved data cleared from this browser.');$('start').scrollIntoView()}
+document.querySelectorAll('.wipe').forEach(b=>b.onclick=wipe);
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));
+if(d&&Array.isArray(d.C)){C=d.C.filter(c=>c&&Number.isFinite(c.start)&&Number.isFinite(c.end)&&c.day>=0&&c.day<7).map(c=>mk(String(c.subject||''),c.day|0,c.start,c.end,String(c.room||'')));
+S={...DEF,...d.S,colors:{...(d.S&&d.S.colors)}};if(!TH[S.theme])S.theme='paper';if(!FM[S.fmt])S.fmt='desktop';return C.length>0}}catch(e){}return false}
+syncCtl();
+if(load()){syncCtl();renderTable();$('review').hidden=false;$('studio').hidden=false;paint();renderColors();say('msg','Restored your saved timetable from this browser.')}
+})();
+</script>
+</body>
+</html>
