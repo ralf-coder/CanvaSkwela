@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CanvaSkwela</title>
 <style>
-:root{color-scheme:light;--bg:#eef2f7;--card:#fff;--ink:#14202e;--mut:#52606f;--line:#d3dbe5;--acc:#0b6e82;--on:#fff;--warn:#b3261e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f151d;--card:#17202b;--ink:#e8eef5;--mut:#9fb0c2;--line:#2b3948;--acc:#4cc3d9;--on:#06222a;--warn:#ff8a80}}
-:root[data-theme="dark"]{color-scheme:dark;--bg:#0f151d;--card:#17202b;--ink:#e8eef5;--mut:#9fb0c2;--line:#2b3948;--acc:#4cc3d9;--on:#06222a;--warn:#ff8a80}
+:root{color-scheme:light;--bg:#f6efea;--card:#fffaf7;--ink:#2a1a29;--mut:#6b566a;--line:#e3d5d2;--acc:#4F344D;--acc2:#d98f4e;--hdr:#4F344D;--hdrink:#fbeff4;--on:#fff;--warn:#b3261e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#1a0f1a;--card:#2a1a2b;--ink:#f6ecf1;--mut:#c9b2c6;--line:#4a3349;--acc:#e2b3dc;--acc2:#f0b36b;--hdr:#4F344D;--hdrink:#fbeff4;--on:#2a1a2b;--warn:#ff9a90}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#1a0f1a;--card:#2a1a2b;--ink:#f6ecf1;--mut:#c9b2c6;--line:#4a3349;--acc:#e2b3dc;--acc2:#f0b36b;--hdr:#4F344D;--hdrink:#fbeff4;--on:#2a1a2b;--warn:#ff9a90}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
 [hidden]{display:none!important}
@@ -55,15 +55,71 @@ fieldset{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px}leg
 .ins .bad{border-left-color:var(--warn)}.ins .long{border-left-color:var(--acc)}
 .policy{max-width:70ch}.policy ul{padding-left:1.2em}
 footer{padding-top:30px;padding-bottom:40px;color:var(--mut)}footer span{margin-right:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 1px 3px rgba(79,52,77,.12)}
+header.top{max-width:none;margin:0;padding:10px 20px;background:var(--hdr);color:var(--hdrink)}
+.brand,nav a{color:var(--hdrink)}
+.brand::before{content:"";display:inline-block;width:.65em;height:.65em;border-radius:3px;background:var(--acc2);margin-right:.5em}
+header :focus-visible{outline-color:var(--hdrink)}
+.dash{display:flex;flex-direction:column;gap:14px;padding:14px}
+.dash>section.card{margin:0;max-width:none}
+#studio{padding:0;margin:0;border:0;max-width:none}
+.studio{grid-template-columns:1fr;gap:14px;margin-top:0}
+.step{display:inline-grid;place-items:center;width:1.5em;height:1.5em;border-radius:50%;background:var(--acc2);color:#2a1a29;font-size:.8em;font-weight:800;margin-right:.5em}
+.eyebrow{margin:0;font-weight:700;color:var(--mut);font-size:.85rem;letter-spacing:.06em;text-transform:uppercase}
+.empty{display:none}
+.pvbox{position:relative}
+.dlg{border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);padding:0;width:min(720px,92vw)}
+.dlg::backdrop{background:rgba(30,15,30,.65)}
+.dlgin{padding:20px 24px;max-height:86vh;overflow:auto}
+.dlg .close{float:right;margin-left:12px}
+.dash[data-step="1"] #review,.dash[data-step="1"] #studio,.dash[data-step="2"] #start,.dash[data-step="2"] #studio,.dash[data-step="3"] #start,.dash[data-step="3"] #review{display:none!important}
+.steps{display:flex;gap:6px;list-style:none;margin:0;padding:0;align-items:center}
+.steps li{display:flex;align-items:center;gap:.5em;padding:4px 12px;border-radius:999px;color:var(--hdrink);opacity:.8;font-weight:600;font-size:.92rem}
+.steps li .step{margin:0}
+.steps li[aria-current="step"]{background:rgba(255,255,255,.16);opacity:1}
+.pts{list-style:none;padding:0;margin:1em 0;display:grid;gap:.5em;color:var(--mut)}
+.pts li::before{content:"\2713";color:var(--acc);font-weight:800;margin-right:.6em}
+@media(max-width:700px){.steps .lbl{display:none}}
+@media(min-width:1000px) and (min-height:620px){
+html,body{height:100%;overflow:hidden}
+body{display:grid;grid-template-rows:auto minmax(0,1fr) auto}
+.dash{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"one";gap:14px;padding:14px 20px;min-height:0;overflow:hidden}
+.dash[data-step="3"]{grid-template-columns:330px minmax(0,1fr) minmax(260px,24%);grid-template-areas:"ct pv in"}
+#start,#review{grid-area:one;min-height:0}
+#start{display:grid;grid-template-columns:1fr 1.1fr;column-gap:56px;align-content:center;padding:40px 64px}
+#start>.eyebrow,#start>h1,#start>.lead,#start>.pts{grid-column:1}
+#start>.drop{grid-column:2;grid-row:1/5;align-content:center;justify-items:center;text-align:center;padding:32px;gap:16px;min-height:min(46vh,380px)}
+#start>.drop .row{justify-content:center}
+#start>#msg{grid-column:2;grid-row:5}
+h1{font-size:clamp(2rem,3.4vw,3.4rem);max-width:14ch;margin:.2em 0}
+.lead{font-size:1.1rem;margin:0 0 .5em}
+#review{display:flex;flex-direction:column;padding:20px 24px}
+#review .scroll{flex:1;min-height:0;overflow:auto}
+table{min-width:560px}td:first-child{min-width:170px}
+#studio,.studio{display:contents}
+.ctl{grid-area:ct;overflow:auto;min-height:0;align-content:start;grid-template-columns:1fr 1fr;gap:10px}
+.ctl>*{grid-column:1/-1}.ctl>label:nth-of-type(2),.ctl>label:nth-of-type(3){grid-column:auto}
+#colors{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:4px 10px;max-height:18vh;overflow:auto}
+.pv{grid-area:pv;display:flex;flex-direction:column;min-height:0;padding:12px}
+.pvbox{flex:1;min-height:0}
+#cv{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:contain;border:0;border-radius:0}
+.inscard{grid-area:in;overflow:auto;min-height:0;padding:16px}
+.ins li{padding:6px 10px;font-size:.92rem}
+.dash h2{font-size:1.2rem;margin:0 0 6px}.dash h3{margin:0 0 8px;font-size:1.05rem}
+footer.wrap{max-width:none;display:flex;align-items:center;gap:18px;padding:8px 20px;border-top:1px solid var(--line)}
+footer span{margin:0}
+}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="wrap top"><a class="brand" href="#start">CanvaSkwela</a><nav aria-label="Main"><a href="#start">Build a timetable</a><a href="#privacy">Privacy Policy</a></nav></header>
-<main id="main">
-<section id="start" class="wrap">
+<header class="wrap top"><a class="brand" href="#start">CanvaSkwela</a><ol class="steps" aria-label="Progress"><li aria-current="step"><span class="step">1</span><span class="lbl">Upload</span></li><li><span class="step">2</span><span class="lbl">Check</span></li><li><span class="step">3</span><span class="lbl">Style</span></li></ol><nav aria-label="Main"><a href="#start">Build a timetable</a><a href="#planned" data-dlg="planned">Planned improvements</a><a href="#privacy" data-dlg="privacy">Privacy Policy</a></nav></header>
+<main id="main" class="dash" data-step="1">
+<section id="start" class="wrap card">
+<p class="eyebrow"><span class="step">1</span>Upload</p>
 <h1>Turn your schedule PDF into a timetable worth keeping</h1>
 <p class="lead">Upload your class schedule, fix anything we misread, then pick colors and a theme. Download the result as an image, a PDF, or a wallpaper for your phone.</p>
+<ul class="pts"><li>Your PDF is read inside your browser</li><li>No account needed</li><li>Download an image, a PDF, or a calendar file</li></ul>
 <div class="drop" id="drop">
 <p><strong>Drop your schedule PDF here</strong><br><span class="mut">It’s read inside your browser and never uploaded.</span></p>
 <div class="row"><button class="btn" id="pick" type="button">Choose a PDF</button><button class="btn ghost" id="sample" type="button">Try a sample schedule</button><button class="btn ghost" id="blank" type="button">Enter classes by hand</button></div>
@@ -72,18 +128,19 @@ footer{padding-top:30px;padding-bottom:40px;color:var(--mut)}footer span{margin-
 <p id="msg" role="status" aria-live="polite"></p>
 </section>
 
-<section id="review" class="wrap" hidden>
-<h2>Check what we found</h2>
+<section id="review" class="wrap card" hidden>
+<h2><span class="step">2</span>Check what we found</h2>
 <p class="mut">PDF text isn’t always read perfectly. Fix any subject, day, time, or room before you generate.</p>
 <div class="scroll"><table><thead><tr><th>Subject</th><th>Day</th><th>Start</th><th>End</th><th>Room</th><th><span class="sr">Remove</span></th></tr></thead><tbody id="rows"></tbody></table></div>
-<div class="row"><button class="btn ghost" id="add" type="button">Add a class</button><button class="btn ghost" id="sort" type="button">Sort by day and time</button><button class="btn" id="gen" type="button">Generate timetable</button></div>
+<div class="row"><button class="btn ghost" id="back1" type="button">← Back to upload</button><button class="btn ghost" id="add" type="button">Add a class</button><button class="btn ghost" id="sort" type="button">Sort by day and time</button><button class="btn" id="gen" type="button">Generate timetable</button></div>
 <p id="msg2" role="status" aria-live="polite"></p>
 </section>
 
 <section id="studio" class="wrap" hidden>
-<h2>Style your timetable</h2>
 <div class="studio">
-<div class="ctl">
+<div class="ctl card">
+<h2><span class="step">3</span>Style your timetable</h2>
+<button class="btn ghost sm" id="back2" type="button">← Back to edit classes</button>
 <label>Title<input id="title" type="text" maxlength="40"></label>
 <label>Theme<select id="theme"></select></label>
 <label>Layout<select id="fmt"></select></label>
@@ -96,15 +153,15 @@ footer{padding-top:30px;padding-bottom:40px;color:var(--mut)}footer span{margin-
 <label class="ck"><input type="checkbox" id="o_rem"> Add a 10-minute reminder to calendar events</label>
 <p id="msg3" role="status" aria-live="polite"></p>
 </div>
-<div>
-<canvas id="cv" role="img" aria-label="Preview of your generated timetable. The same information is in the table above and the insights list below."></canvas>
+<div class="pv card"><div class="pvbox"><canvas id="cv" role="img" aria-label="Preview of your generated timetable. The same information is in the review table and the insights list."></canvas></div></div>
+<div class="inscard card">
 <h3>Schedule insights</h3>
 <ul id="ins" class="ins"></ul>
 </div>
 </div>
 </section>
 
-<section id="planned" class="wrap policy">
+<dialog id="planned" class="dlg policy" aria-label="Planned improvements"><div class="dlgin"><button class="btn ghost sm close" type="button">Close</button>
 <h2>Planned improvements</h2>
 <p class="mut">These are not available yet.</p>
 <ul>
@@ -113,9 +170,9 @@ footer{padding-top:30px;padding-bottom:40px;color:var(--mut)}footer span{margin-
 <li>More themes and color palettes.</li>
 <li>Bundling the PDF reader with the site so no outside request is needed.</li>
 </ul>
-</section>
+</div></dialog>
 
-<section id="privacy" class="wrap policy">
+<dialog id="privacy" class="dlg policy" aria-label="Privacy Policy"><div class="dlgin"><button class="btn ghost sm close" type="button">Close</button>
 <h2>Privacy Policy</h2>
 <p class="mut">Last updated October 25, 2026. CanvaSkwela is a student coursework project.</p>
 <h3>What data is collected, and why</h3>
@@ -132,9 +189,9 @@ footer{padding-top:30px;padding-bottom:40px;color:var(--mut)}footer span{margin-
 <p>Files are processed on your device, and saved data is only as private as your device and browser profile: anyone using the same profile can see it. Images, PDFs, and calendar files you download are saved wherever you choose. No system is perfectly secure, so please use test or non-sensitive schedules and avoid PDFs containing IDs, grades, or other personal records.</p>
 <h3>Contact</h3>
 <p>Privacy questions: <a href="mailto:ralfpaller.rvp@gmail.com">ralfpaller.rvp@gmail.com</a></p>
-</section>
+</div></dialog>
 </main>
-<footer class="wrap"><span>Student project built with AI assistance.</span><span><a href="#privacy">Privacy Policy</a></span><button class="link wipe" type="button">Clear saved data</button></footer>
+<footer class="wrap"><span>Student project built with AI assistance.</span><span><a href="#privacy" data-dlg="privacy">Privacy Policy</a></span><button class="link wipe" type="button">Clear saved data</button></footer>
 
 <script>
 (()=>{
@@ -150,6 +207,7 @@ accessible:{n:'Color-blind safe',bg:'#ffffff',bg2:'#eef2f7',ink:'#111827',grid:'
 const FM={desktop:{n:'Desktop wallpaper (1920×1080)',w:1920,h:1080,top:190,ty:112},phone:{n:'Phone wallpaper (1080×2340)',w:1080,h:2340,top:700,ty:626},print:{n:'Print, landscape (1754×1240)',w:1754,h:1240,top:200,ty:120}};
 const DEF={title:'My timetable',theme:'paper',fmt:'desktop',room:true,time:true,hl:true,colors:{}},KEY='timetable-studio-v1';
 let S={...DEF,colors:{}},C=[],nid=1;
+const setStep=n=>{$('main').dataset.step=n;document.querySelectorAll('.steps li').forEach((li,i)=>i+1===n?li.setAttribute('aria-current','step'):li.removeAttribute('aria-current'));const e=document.querySelector(['#start h1','#review h2','#studio h2'][n-1]);if(e){e.setAttribute('tabindex','-1');e.focus({preventScroll:true})}window.scrollTo(0,0)};
 const p2=n=>String(n).padStart(2,'0'),hm=m=>p2(Math.floor(m/60))+':'+p2(m%60),tm=v=>{const [h,m]=v.split(':');return +h*60+ +m};
 const f12=m=>((Math.floor(m/60)%12)||12)+':'+p2(m%60),ap=m=>Math.floor(m/60)%24<12?'AM':'PM';
 const ft=m=>f12(m)+' '+ap(m),h12=m=>((Math.floor(m/60)%12)||12)+' '+ap(m);
@@ -285,7 +343,7 @@ function renderColors(){
 const box=$('colors');box.textContent='';
 subs().forEach(s=>{const l=document.createElement('label'),i=document.createElement('input');l.className='sw';i.type='color';i.value=colorOf(s);i.oninput=()=>{S.colors[s]=i.value;save();paint()};l.append(i,s);box.append(l)})}
 function syncCtl(){$('theme').value=S.theme;$('fmt').value=S.fmt;$('title').value=S.title;['room','time','hl'].forEach(k=>$('o_'+k).checked=S[k])}
-function go(list,note){C=list;renderTable();$('review').hidden=false;$('studio').hidden=true;say('msg',note);say('msg2','');save();$('review').scrollIntoView()}
+function go(list,note){C=list;renderTable();$('review').hidden=false;$('studio').hidden=true;say('msg2',note);say('msg','');save();setStep(2)}
 async function readPdf(f){
 if(!/pdf$/i.test(f.type)&&!/\.pdf$/i.test(f.name)){say('msg','Please choose a PDF file.');return}
 say('msg','Reading '+f.name+'…');
@@ -351,14 +409,19 @@ $('add').onclick=()=>{C.push(mk('New subject',0,540,630,''));renderTable();refre
 $('sort').onclick=()=>{C.sort((a,b)=>a.day-b.day||a.start-b.start);renderTable();refresh()};
 $('gen').onclick=()=>{
 if(!C.some(c=>c.subject&&c.end>c.start)){say('msg2','Add at least one class with a subject and an end time later than its start time.');return}
-say('msg2','');$('studio').hidden=false;syncCtl();paint();renderColors();save();$('studio').scrollIntoView()};
-function wipe(){try{localStorage.removeItem(KEY)}catch(e){}C=[];S={...DEF,colors:{}};syncCtl();$('review').hidden=true;$('studio').hidden=true;say('msg','Saved data cleared from this browser.');$('start').scrollIntoView()}
+say('msg2','');$('studio').hidden=false;syncCtl();paint();renderColors();save();setStep(3)};
+function wipe(){try{localStorage.removeItem(KEY)}catch(e){}C=[];S={...DEF,colors:{}};syncCtl();$('review').hidden=true;$('studio').hidden=true;say('msg','Saved data cleared from this browser.');setStep(1)}
 document.querySelectorAll('.wipe').forEach(b=>b.onclick=wipe);
+$('back1').onclick=()=>setStep(1);$('back2').onclick=()=>setStep(2);
+const dOpen=d=>{if(d&&d.showModal&&!d.open)d.showModal()};
+document.querySelectorAll('[data-dlg]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();dOpen($(a.dataset.dlg))}));
+document.querySelectorAll('dialog').forEach(d=>{d.addEventListener('click',e=>{if(e.target===d)d.close()});const b=d.querySelector('.close');if(b)b.onclick=()=>d.close()});
+const hp=()=>{if(location.hash==='#privacy')dOpen($('privacy'))};hp();addEventListener('hashchange',hp);
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY));
 if(d&&Array.isArray(d.C)){C=d.C.filter(c=>c&&Number.isFinite(c.start)&&Number.isFinite(c.end)&&c.day>=0&&c.day<7).map(c=>mk(String(c.subject||''),c.day|0,c.start,c.end,String(c.room||'')));
 S={...DEF,...d.S,colors:{...(d.S&&d.S.colors)}};if(!TH[S.theme])S.theme='paper';if(!FM[S.fmt])S.fmt='desktop';return C.length>0}}catch(e){}return false}
 syncCtl();
-if(load()){syncCtl();renderTable();$('review').hidden=false;$('studio').hidden=false;paint();renderColors();say('msg','Restored your saved timetable from this browser.')}
+if(load()){syncCtl();renderTable();$('review').hidden=false;$('studio').hidden=false;paint();renderColors();setStep(3);say('msg3','Restored your saved timetable from this browser.')}
 })();
 </script>
 </body>
